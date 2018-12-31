@@ -9,7 +9,8 @@ contract StarNotary is ERC721 {
     }
 
 //  Add a name and a symbol for your starNotary tokens
-
+    string public name = "Nojoom"; //this means stars in arabic
+    string public symbol = "NJM";  //Najm is A star in arabic
 //
 
     mapping(uint256 => Star) public tokenIdToStarInfo;
