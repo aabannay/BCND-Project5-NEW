@@ -6,6 +6,7 @@ contract StarNotary is ERC721 {
 
     struct Star {
         string name;
+        bool exists;
     }
 
 //  Add a name and a symbol for your starNotary tokens
@@ -17,7 +18,8 @@ contract StarNotary is ERC721 {
     mapping(uint256 => uint256) public starsForSale;
 
     function createStar(string _name, uint256 _tokenId) public {
-        Star memory newStar = Star(_name);
+        //set existance variable to true 
+        Star memory newStar = Star({name: _name, exists: true});
 
         tokenIdToStarInfo[_tokenId] = newStar;
 
@@ -64,14 +66,14 @@ contract StarNotary is ERC721 {
     function exchangeStars(uint256 _tokenId1, uint256 _tokenId2) {
         //in order to exchange 2 tokens the user who calls this function should own the first star
         //and the second star should be listed for sale.
-        require(_isApprovedOrOwner(msg.sender, tokenId1));
-        require(_isApprovedOrOwner(msg.sender, tokenId2));
+        require(_isApprovedOrOwner(msg.sender, _tokenId1));
+        require(_isApprovedOrOwner(msg.sender, _tokenId2));
 
         _removeTokenFrom(ownerOf(_tokenId1), _tokenId1);
         _addTokenTo(ownerOf(_tokenId2), _tokenId1); 
 
         _removeTokenFrom(ownerOf(_tokenId2), _tokenId2);
-        _addTokenTo(ownerOf(tokenId1), _tokenId2);
+        _addTokenTo(ownerOf(_tokenId1), _tokenId2);
     }
 //
 

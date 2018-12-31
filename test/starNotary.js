@@ -12,7 +12,7 @@ contract('StarNotary', async (accs) => {
   it('can Create a Star', async() => {
     let tokenId = 1;
     await instance.createStar('Awesome Star!', tokenId, {from: accounts[0]})
-    assert.equal(await instance.tokenIdToStarInfo.call(tokenId), 'Awesome Star!')
+    assert.deepEqual(await instance.tokenIdToStarInfo.call(tokenId), ['Awesome Star!', true])
   });
 
   it('lets user1 put up their star for sale', async() => {
@@ -66,5 +66,12 @@ contract('StarNotary', async (accs) => {
   // Write Tests for:
 
 // 1) The token name and token symbol are added properly.
+it('The token name and token symbol are added properly.', async() => {
+  let name = 'Nojoom'
+  let symbol = 'NJM'
+  //since they are both declared public variables then their getters will be created automatically.
+  assert.equal(await instance.name(), name)
+  assert.equal(await instance.symbol(), symbol)
+});
 // 2) 2 users can exchange their stars.
 // 3) Stars Tokens can be transferred from one address to another.
