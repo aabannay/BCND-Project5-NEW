@@ -78,5 +78,9 @@ contract StarNotary is ERC721 {
 // Write a function to Transfer a Star. The function should transfer a star from the address of the caller.
 // The function should accept 2 arguments, the address to transfer the star to, and the token ID of the star.
 //
-    
+    function transferStar(address to, uint256 _tokenId) {
+        require(ownerOf(_tokenId) == msg.sender); 
+
+        safeTransferFrom(msg.sender, to, _tokenId);
+    }
 }
