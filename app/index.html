@@ -16,12 +16,13 @@
     <br><label for="starId">Star ID:</label><input type="text" id="starId"></input>
     <br><br><button id="createStar" onclick="App.createStar()">Create Star</button>
     <br><br>
-    <br>
-
     <span id="status"></span>
-
+    <br><br>
 <!--Add an input box and a button to Lookup a star by ID using tokenIdToStarInfo-->
+  <br><label for="starIdToSearchFor">Star ID</label><input type="text" id="starIdToSearchFor"></input>
+  <br><br><button id="searchStar" onclick="App.lookup()">Search for Star</button>
+  <br><br>
 
-    <br>
+  <span id="foundStar"></span>
 </body>
 </html>

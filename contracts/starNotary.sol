@@ -27,7 +27,7 @@ contract StarNotary is ERC721 {
     }
 
 // Add a function lookUptokenIdToStarInfo, that looks up the stars using the Token ID, and then returns the name of the star.
-    function lookUptokenIdToStarInfo(uint256 tokenId) returns(string){
+    function lookUptokenIdToStarInfo(uint256 tokenId) view returns(string){
         require(tokenIdToStarInfo[tokenId].exists, "Star does not exist.");
         
         Star memory theStar = tokenIdToStarInfo[tokenId];
