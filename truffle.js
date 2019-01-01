@@ -3,6 +3,7 @@ require('babel-register')
 
 // Edit truffle.config file should have settings to deploy the contract to the Rinkeby Public Network.
 // Infura should be used in the truffle.config file for deployment to Rinkeby.
+const HDWalletProvider = require("truffle-hdwallet-provider");
 
 module.exports = {
   networks: {
