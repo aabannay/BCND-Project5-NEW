@@ -65,33 +65,46 @@ contract('StarNotary', async (accs) => {
 
   // Write Tests for:
 
-// 1) The token name and token symbol are added properly.
-it('The token name and token symbol are added properly.', async() => {
-  let name = 'Nojoom'
-  let symbol = 'NJM'
-  //since they are both declared public variables then their getters will be created automatically.
-  assert.equal(await instance.name(), name)
-  assert.equal(await instance.symbol(), symbol)
-});
+  // 1) The token name and token symbol are added properly.
+  it('The token name and token symbol are added properly.', async() => {
+    let name = 'Nojoom'
+    let symbol = 'NJM'
+    //since they are both declared public variables then their getters will be created automatically.
+    assert.equal(await instance.name(), name)
+    assert.equal(await instance.symbol(), symbol)
+  });
 
-// 2) 2 users can exchange their stars.
-it('2 users can exchange their stars.', async() => {
-  let user1 = accounts[1]
-  let user2 = accounts[2]
+  // 2) 2 users can exchange their stars.
+  it('2 users can exchange their stars.', async() => {
+    let user1 = accounts[1]
+    let user2 = accounts[2]
 
-  let firstStarId = 6
-  let secondStarId = 7
+    let firstStarId = 6
+    let secondStarId = 7
 
-  await instance.createStar('first star', firstStarId, {from: user1})
-  await instance.createStar('second star', secondStarId, {from: user2})
+    await instance.createStar('first star', firstStarId, {from: user1})
+    await instance.createStar('second star', secondStarId, {from: user2})
 
-  //approve user1 to transfer second star
-  await instance.approve(user1, secondStarId, {from: user2})
+    //approve user1 to transfer second star
+    await instance.approve(user1, secondStarId, {from: user2})
 
-  await instance.exchangeStars(firstStarId, secondStarId, {from: user1});
-  
-  assert.equal(await instance.ownerOf.call(secondStarId), user1);
-  assert.equal(await instance.ownerOf.call(firstStarId), user2);
+    await instance.exchangeStars(firstStarId, secondStarId, {from: user1})
+    
+    assert.equal(await instance.ownerOf.call(secondStarId), user1)
+    assert.equal(await instance.ownerOf.call(firstStarId), user2)
 
-});
+  });
 // 3) Stars Tokens can be transferred from one address to another.
+
+  it('Stars Tokens can be transferred from one address to another.', async() => {
+    let user1 = accounts[1]
+    let user2 = accounts[2]
+
+    let newStarId = 8; 
+
+    await instance.createStar('newly created star!', newStarId, {from: user1})
+
+    await instance.transferStar(user2, newStarId, {from: user1});
+
+    assert.equal(await instance.ownerOf.call(newStarId), user2);
+  });
