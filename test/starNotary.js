@@ -73,5 +73,25 @@ it('The token name and token symbol are added properly.', async() => {
   assert.equal(await instance.name(), name)
   assert.equal(await instance.symbol(), symbol)
 });
+
 // 2) 2 users can exchange their stars.
+it('2 users can exchange their stars.', async() => {
+  let user1 = accounts[1]
+  let user2 = accounts[2]
+
+  let firstStarId = 6
+  let secondStarId = 7
+
+  await instance.createStar('first star', firstStarId, {from: user1})
+  await instance.createStar('second star', secondStarId, {from: user2})
+
+  //approve user1 to transfer second star
+  await instance.approve(user1, secondStarId, {from: user2})
+
+  await instance.exchangeStars(firstStarId, secondStarId, {from: user1});
+  
+  assert.equal(await instance.ownerOf.call(secondStarId), user1);
+  assert.equal(await instance.ownerOf.call(firstStarId), user2);
+
+});
 // 3) Stars Tokens can be transferred from one address to another.

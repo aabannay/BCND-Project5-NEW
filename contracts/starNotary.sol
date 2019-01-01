@@ -69,11 +69,12 @@ contract StarNotary is ERC721 {
         require(_isApprovedOrOwner(msg.sender, _tokenId1));
         require(_isApprovedOrOwner(msg.sender, _tokenId2));
 
+        address firstOwner = ownerOf(_tokenId1);
         _removeTokenFrom(ownerOf(_tokenId1), _tokenId1);
         _addTokenTo(ownerOf(_tokenId2), _tokenId1); 
 
         _removeTokenFrom(ownerOf(_tokenId2), _tokenId2);
-        _addTokenTo(ownerOf(_tokenId1), _tokenId2);
+        _addTokenTo(firstOwner, _tokenId2);
     }
 //
 
